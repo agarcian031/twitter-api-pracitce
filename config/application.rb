@@ -32,6 +32,6 @@ module TwitterFeed
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     # saying that once the page loads to go into the lib folder and grab whatever is in the folder and run it. 
-    config.autoload_paths << Rails.root.join("lib")
+    config.autoload_paths << Rails.root.join('lib')
   end
 end
