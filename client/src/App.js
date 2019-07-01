@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
+import {Grid} from 'semantic-ui-react'; 
+import axios from 'axios'; 
 
-function App() {
+const App = () => {
+  const [tweets, setTweets] = useState([])
+
+  useEffect(() => {
+    axios.get('/api/tweets')
+    .then( res => setTweets(res.data) )
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grid>
+    <Grid.Row>
+      <Grid.Column mobile={16} tablet={16} computer={4} >
+      </Grid.Column>
+      <Grid.Column mobile={16} tablet={16} computer={10}>
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
   );
 }
 
