@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import {Grid, Input, Header} from 'semantic-ui-react'; 
+import {Grid, Input, Header, Button} from 'semantic-ui-react'; 
 import Tweets from './Tweets'
 import axios from 'axios'; 
 
 function App() {
   const [tweets, setTweets] = useState([]); 
   const [visible, setVisible] = useState([]); 
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState(""); 
+  const [tweet, setTweet] = useState(""); 
 
   useEffect(() => {
     axios.get("/api/tweets")
@@ -37,6 +38,17 @@ function App() {
     }
   }
 
+  const postTweet = () => {
+    if(tweet) {
+      axios.post("/api/tweet", {tweet})
+      .then(res => {
+        setTweet("")
+        setVisible([...visible, res.data])
+      })
+    }
+
+  }
+
   return (
     <Grid>
     <Grid.Row>
@@ -48,6 +60,10 @@ function App() {
               icon={{ name: 'search', circular: true }}
               placeholder="Search..."
             />
+      <hr />
+     <Header as="h2" textAlign="center">Tweet Something</Header>
+     <Input onChange={(e) => setTweet(e.target.value)} value={tweet} />
+     <Button onClick={postTweet}>Tweet!</Button>
       </Grid.Column>
       <Grid.Column mobile={16} tablet={16} computer={10}>
         <Tweets tweets={visible}/>
